@@ -25,7 +25,7 @@ module BaUpload
     def error_files(partner_id: nil)
       url = base_url(partner_id)
       m.get url
-      links = m.page.links_with(text: /ESP|ESV/)
+      links = m.page.links_with(text: /(ESP|ESV).*xml/)
       links.map do |link|
         ErrorFile.new(link)
       end
