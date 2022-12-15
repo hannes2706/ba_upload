@@ -3,7 +3,7 @@ require "openssl"
 
 module BaUpload
   def self.export_certificate(file_path:, passphrase:)
-    cert = OpenSSL::PKCS12.new(File.read(file_path), passphrase)
+    cert = OpenSSL::PKCS12.new(open(file_path).read, passphrase)
     {
       key: Tempfile.new(['key','.pem']).tap{|f| f.write(cert.key.to_s); f.flush},
       cert: Tempfile.new(['cert','.pem']).tap{|f| f.write(cert.certificate.to_s); f.flush},
